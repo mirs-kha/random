@@ -10,9 +10,6 @@
 </head>
 
 <body>
-
-
-
     <div id="parent" class="parent">
         <div class="div1">Player 1 </div>
         <div id="dog" class="div2">Chien</div>
@@ -27,8 +24,6 @@
         <div id="robot" class="div11"> Choix robot</div>
     </div>
 
-
-
     <script>
         var player = ""
         cat.addEventListener("click", function () {
@@ -37,9 +32,7 @@
         function catplayer() {
             var cat = "cat"
             player = cat
-            console.log("cat")
             document.querySelector('#choixjoueur').innerHTML = cat
-
         };
 
         mouse.addEventListener("click", function () {
@@ -47,9 +40,8 @@
         });
         function mouseplayer() {
             var mouse = "mouse"
-            console.log("mouse")
-
             player = mouse
+            console.log(mouse)
             document.querySelector('#choixjoueur').innerHTML = mouse
 
         };
@@ -59,8 +51,9 @@
         });
         function dogplayer() {
             var dog = "dog"
-            console.log("dog")
+
             player = dog
+
             document.querySelector('#choixjoueur').innerHTML = player
 
         };
@@ -69,10 +62,6 @@
 
         parent.addEventListener("click", function () {
             clickplayer();
-
-
-
-
         });
 
         function clickplayer() {
@@ -84,23 +73,31 @@
             var valueToUse = values[Math.floor(Math.random() * values.length)];
             var pos = animaux.indexOf(valueToUse);
             document.querySelector('#robot').innerHTML = animaux[pos]
-            console.table(animaux[pos]);
 
+            console.log(animaux[pos]);
+            console.log(player);
 
             if (animaux[pos] == player) {
-var nul = document.querySelector('#resultat')
-nul.innerHTML = "match nul"
-console.log("egal")
-}
+                var nul = document.querySelector('#resultat')
+                nul.innerHTML = "match nul"
+                console.log("egal")
+            } else if
+                (player == "dog" && animaux[pos] == "cat" || player == "cat" && animaux[pos] == "mouse" || player == "mouse" && animaux[pos] == "dog") {
 
+                var win = document.querySelector('#resultat')
+                win.innerHTML = "win"
+                console.log("you win")
+            } else if
+                (animaux[pos] == "dog" && player == "cat" || animaux[pos] == "cat" && player == "mouse" || animaux[pos] == "mouse" && player == "dog") {
 
-else if (player == dog && animaux[pos] == cat || player == cat && animaux[pos] == mouse) {
-console.log("yep")
-document.querySelector('#resultat').innerHTML = "win"
-console.log("you win")
-}
+                var loose = document.querySelector('#resultat')
+                loose.innerHTML = "loose"
+                console.log("you loose")
+            }
 
-
+            else {
+                console.log("none")
+            }
 
 
 
