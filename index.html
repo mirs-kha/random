@@ -10,11 +10,78 @@
 </head>
 
 <body>
-    <div id="parent" class="parent">
-        <div class="div1">Player 1 </div>
-        <div id="dog" class="div2">Chien</div>
-        <div id="cat" class="div3"> Chat</div>
-        <div id="mouse" class="div4">Souris </div>
+
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div id="close">&times;</div>
+            <p>Ici les regles du jeu..</p>
+        </div>
+
+    </div>
+    <h1 class="titre">Game Culte</h1>
+    <div class="infos">
+        <div class="scored">Mon score : <span id="score"></span> </div>
+        <div class="rounded">Round <span class="round"></span></div>
+        <div class="player2">Player 2</div>
+    </div>
+
+
+
+    <div class="grid">
+
+        <div class="div1">
+            <div id="dog" class="div2"><p>Pierre</p><img src="pierre.png" alt=""></div>
+            <div id="cat" class="div3"><p>feuille</p><img src="feuille.png" alt=""></div>
+            <div id="mouse" class="div4"><p>ciseaux</p><img src="ciseaux.png" alt=""></div>
+        </div>
+
+        <div id="choixjoueur" class="div9">
+            Choix Joueur
+        </div>
+
+        <div class="vs">
+            <div class="versus">
+                VS
+            </div>
+            <div id="resultat" class="div10">
+                Result
+            </div>
+            <div id="gagne"></div>
+        </div>
+
+
+
+        <div class="resultatdurobot">
+            <div id="robot" class="div11"> Choix robot</div>
+        </div>
+
+        <div class="choixrobotrandom">
+            <div class="choix1"><p>Pierre</p><img src="pierre.png" alt=""></div>
+            <div class="choix2"><p>feuille</p><img src="feuille.png" alt=""></div>
+            <div class="choix3"><p>ciseaux</p><img src="ciseaux.png" alt=""></div>
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+
+    <!-- <div id="parent" class="parent">
+        Player 1
+        <div class="div1">
+
+            <div id="dog" class="div2">Chien</div>
+            <div id="cat" class="div3"> Chat</div>
+            <div id="mouse" class="div4">Souris </div>
+
+        </div>
+
         <div class="div5"> Adversaire</div>
         <div class="div6"> Chien</div>
         <div class="div7"> Chat</div>
@@ -22,17 +89,20 @@
         <div id="choixjoueur" class="div9"> Choix Joueur</div>
         <div id="resultat" class="div10"> Result</div>
         <div id="robot" class="div11"> Choix robot</div>
-    </div>
+    </div> -->
 
     <script>
+        var score = 0
+        var gagnant = ""
         var player = ""
+        var round = 0
         cat.addEventListener("click", function () {
             catplayer();
         });
         function catplayer() {
             var cat = "cat"
             player = cat
-            document.querySelector('#choixjoueur').innerHTML = cat
+            document.querySelector('#choixjoueur').innerHTML = '<img src="feuille.png">'
         };
 
         mouse.addEventListener("click", function () {
@@ -42,7 +112,7 @@
             var mouse = "mouse"
             player = mouse
             console.log(mouse)
-            document.querySelector('#choixjoueur').innerHTML = mouse
+            document.querySelector('#choixjoueur').innerHTML = '<img src="ciseaux.png">'
 
         };
 
@@ -54,17 +124,33 @@
 
             player = dog
 
-            document.querySelector('#choixjoueur').innerHTML = player
+            document.querySelector('#choixjoueur').innerHTML = '<img src="pierre.png">'
 
         };
+        var div1 = document.querySelector('.div1')
+        div1.addEventListener("click", function () {
+
+            if (round < 4) {
+                clickplayer()
+
+            }
+            else {
+                div1.removeEventListener("click", function () { })
+                dog.removeEventListener("click", function () { })
+                cat.removeEventListener("click", function () { })
+                mouse.removeEventListener("click", function () { })
+                finPartie()
 
 
-
-        parent.addEventListener("click", function () {
-            clickplayer();
+            }
         });
 
         function clickplayer() {
+
+            round = round + 1
+            roundAffiche = document.querySelector('.round')
+            roundAffiche.innerHTML = round
+
             var animaux = ["dog", "cat", "mouse"]
             animaux.forEach(element => {
                 animaux.push(element)
@@ -72,7 +158,12 @@
             var values = animaux
             var valueToUse = values[Math.floor(Math.random() * values.length)];
             var pos = animaux.indexOf(valueToUse);
+            animaux[0] = '<img src="pierre.png">'
+            animaux[1] = '<img src="feuille.png">'
+            animaux[2] = '<img src="ciseaux.png">'
             document.querySelector('#robot').innerHTML = animaux[pos]
+            var pos = animaux.indexOf(valueToUse);
+
 
             console.log(animaux[pos]);
             console.log(player);
@@ -82,38 +173,61 @@
                 nul.innerHTML = "match nul"
                 console.log("egal")
             } else if
-                (player == "dog" && animaux[pos] == "cat" || player == "cat" && animaux[pos] == "mouse" || player == "mouse" && animaux[pos] == "dog") {
+                (player == "dog" && animaux[pos] == "mouse" || player == "cat" && animaux[pos] == "dog" || player == "mouse" && animaux[pos] == "cat") {
 
                 var win = document.querySelector('#resultat')
                 win.innerHTML = "win"
-                console.log("you win")
+                score = score + 1
+                console.log(score)
+                var monscore = document.querySelector('#score')
+                monscore.innerHTML = score
             } else if
-                (animaux[pos] == "dog" && player == "cat" || animaux[pos] == "cat" && player == "mouse" || animaux[pos] == "mouse" && player == "dog") {
+                (animaux[pos] == "dog" && player == "mouse" || animaux[pos] == "cat" && player == "dog" || animaux[pos] == "mouse" && player == "cat") {
 
                 var loose = document.querySelector('#resultat')
                 loose.innerHTML = "loose"
                 console.log("you loose")
+
+                if (score > 0) {
+                    score = score - 1
+                    console.log(score)
+
+                    var monscore = document.querySelector('#score')
+                    monscore.innerHTML = score
+                }
             }
 
             else {
                 console.log("none")
             }
 
-
-
-
-
         };
 
 
+        function finPartie() {
 
 
+            if (score > 0) {
+                console.log("finaleeeee")
+                let final = "victoire"
+                document.querySelector('#gagne').innerHTML = final
+
+            }
+            else {
+                var looser = "you are a looser"
+                document.querySelector('#gagne').innerHTML = looser
+            }
+        }
 
 
+        var close = document.querySelector('#close')
+        close.addEventListener("click", function () {
+            fermerModal()
+        })
 
-
-
-
+        function fermerModal() {
+            document.querySelector('.modal').style.display = "none";
+        }
 
 
 
